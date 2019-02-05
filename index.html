@@ -98,7 +98,7 @@ function changeImage(a)
     }
     else{
         imageIndex+=a;
-	imageIndex = i?(i-i%2):1;
+	imageIndex = i?(i-(i+1)%2):1;
     }
   if (imageIndex > 826) { imageIndex = 1; }
   if (imageIndex < 1) { imageIndex = 826; }

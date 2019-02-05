@@ -78,7 +78,7 @@ var i= getAllUrlParams().i;
 
 
 
-var imageIndex = i?(i-i%2):1;
+var imageIndex = i?(i-(i+1)%2):1;
 var jpgImageName = "https://images.weserv.nl?url=http://c.asstatic.com/images/3169815_636339817233563750-slide";
 var loadString = jpgImageName +imageIndex+ "_normal.png";
 

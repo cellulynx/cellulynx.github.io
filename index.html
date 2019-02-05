@@ -1,7 +1,6 @@
 <html>
 <head>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'c.asstatic.com'; child-src 'none';">
-	
+
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <script>
@@ -80,7 +79,7 @@ var i= getAllUrlParams().i;
 
 
 var imageIndex = i?(i-i%2):1;
-var jpgImageName = "http://c.asstatic.com/images/3169815_636339817233563750-slide";
+var jpgImageName = "https://images.weserv.nl?url=http://c.asstatic.com/images/3169815_636339817233563750-slide";
 var loadString = jpgImageName +imageIndex+ "_normal.png";
 
 function refreshImages()
@@ -110,8 +109,8 @@ refreshImages();
 <body onload="refreshImages()">
 
 <div id="imageSlot">
-  <img id="currentImage" src="http://c.asstatic.com/images/3169815_636339817233563750-slide1_normal.jpg" width="48%" alt="image"/>
-  <img id="currentImageplus" src="http://c.asstatic.com/images/3169815_636339817233563750-slide1_normal.jpg" width="48%" alt="image"/>
+  <img id="currentImage" src="https://images.weserv.nl?url=http://c.asstatic.com/images/3169815_636339817233563750-slide1_normal.jpg" width="48%" alt="image"/>
+  <img id="currentImageplus" src="https://images.weserv.nl?url=http://c.asstatic.com/images/3169815_636339817233563750-slide1_normal.jpg" width="48%" alt="image"/>
 </div>
 <button id="changeImage" onclick="changeImage(-10)">-10</button>
 <button id="changeImage" onclick="changeImage(-2)">-2</button>

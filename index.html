@@ -1,124 +1,64 @@
-<html>
-<head>
+<!-- Copyright (C) 2012-2014 Carlos Pais
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
 
-	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-<script>
-//Sources:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta name = "viewport" content = "user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Belle Engine</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="fontfaces.css"/>
+  </head>
+  <body>
+    <div id="belle">
+        <noscript><p id="noscript">Please, enable JavaScript on your browser.</p></noscript>
+        <div id="game" class="container active"></div>
+        <div id="pauseScreen" class="container"></div>
+        <div id="fps">FPS: </div>
+        <div id="dummy">dummy</div>
+    </div>
+    
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="fontfaceobserver.js"></script>
+    <script type="text/javascript" src="jstorage.js"></script>
+    <script type="text/javascript" src="buzz.js"> </script>
+    <script type="text/javascript" src="init.js"></script>
+    <script type="text/javascript" src="assets.js"></script>
+    <script type="text/javascript" src="game_data.js"></script>
+    <script type="text/javascript" src="utils.js"> </script>
+    <script type="text/javascript" src="core.js"></script>
+    <script type="text/javascript" src="sound_manager.js"></script>
+    <script type="text/javascript" src="asset_manager.js"></script>
+    <script type="text/javascript" src="graphics.js"></script>
+    <script type="text/javascript" src="game_object.js"></script>
+    <script type="text/javascript" src="frame.js"></script>
+    <script type="text/javascript" src="objects.js"> </script>
+    <script type="text/javascript" src="actions.js"> </script>
+    <script type="text/javascript" src="scene.js"> </script>
+    <script type="text/javascript" src="game_model.js"></script>
+    <script type="text/javascript" src="game.js"></script>
+    <script type="text/javascript" src="views.js"></script>
+    <script type="text/javascript" src="game_controller.js"> </script>
+    <script type="text/javascript" src="main.js"> </script>
+    <script>
+            belle.load();
+    </script>
+  </body>
 
-//https://stackoverflow.com/questions/12783458/javascript-simple-image-load-on-button-click
-//https://www.sitepoint.com/get-url-parameters-with-javascript/
-
-function getAllUrlParams(url) {
-
-  // get query string from url (optional) or window
-  var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
-
-  // we'll store the parameters here
-  var obj = {};
-
-  // if query string exists
-  if (queryString) {
-
-    // stuff after # is not part of query string, so get rid of it
-    queryString = queryString.split('#')[0];
-
-    // split our query string into its component parts
-    var arr = queryString.split('&');
-
-    for (var i = 0; i < arr.length; i++) {
-      // separate the keys and the values
-      var a = arr[i].split('=');
-
-      // set parameter name and value (use 'true' if empty)
-      var paramName = a[0];
-      var paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
-
-      // (optional) keep case consistent
-      paramName = paramName.toLowerCase();
-      if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
-
-      // if the paramName ends with square brackets, e.g. colors[] or colors[2]
-      if (paramName.match(/\[(\d+)?\]$/)) {
-
-        // create key if it doesn't exist
-        var key = paramName.replace(/\[(\d+)?\]/, '');
-        if (!obj[key]) obj[key] = [];
-
-        // if it's an indexed array e.g. colors[2]
-        if (paramName.match(/\[\d+\]$/)) {
-          // get the index value and add the entry at the appropriate position
-          var index = /\[(\d+)\]/.exec(paramName)[1];
-          obj[key][index] = paramValue;
-        } else {
-          // otherwise add the value to the end of the array
-          obj[key].push(paramValue);
-        }
-      } else {
-        // we're dealing with a string
-        if (!obj[paramName]) {
-          // if it doesn't exist, create property
-          obj[paramName] = paramValue;
-        } else if (obj[paramName] && typeof obj[paramName] === 'string'){
-          // if property does exist and it's a string, convert it to an array
-          obj[paramName] = [obj[paramName]];
-          obj[paramName].push(paramValue);
-        } else {
-          // otherwise add the property
-          obj[paramName].push(paramValue);
-        }
-      }
-    }
-  }
-
-  return obj;
-}
-
-var i= getAllUrlParams().i;
-
-
-
-var imageIndex = i?(i-i%2)+1:1;
-var jpgImageName = "https://images.weserv.nl?url=http://c.asstatic.com/images/3169815_636339817233563750-slide";
-var loadString = jpgImageName +imageIndex+ "_normal.png";
-
-function refreshImages()
-{
-	var locationString = jpgImageName + imageIndex + "_normal.png";
-	var locationString2 = jpgImageName + (imageIndex+1) + "_normal.png";
-	$('uInput').attr('value',imageIndex);
-	$('#currentImage').attr('src', locationString);
-	$('#currentImageplus').attr('src', locationString2);
-}
-
-function changeImage(a)
-{
-    if(typeof a === undefined){
-        imageIndex =  $('uInput').value;
-    }
-    else{
-        imageIndex+=a;
-	imageIndex = imageIndex-imageIndex%2+1;
-    }
-  if (imageIndex > 826) { imageIndex = 1; }
-  if (imageIndex < 1) { imageIndex = 826; }
-  refreshImages();
-}
-refreshImages();
-</script>
-</head>
-<body onload="refreshImages()">
-
-<div id="imageSlot">
-  <img id="currentImage" src="https://images.weserv.nl?url=http://c.asstatic.com/images/3169815_636339817233563750-slide1_normal.jpg" width="48%" alt="image"/>
-  <img id="currentImageplus" src="https://images.weserv.nl?url=http://c.asstatic.com/images/3169815_636339817233563750-slide1_normal.jpg" width="48%" alt="image"/>
-</div>
-<button id="changeImage" onclick="changeImage(-10)">-10</button>
-<button id="changeImage" onclick="changeImage(-2)">-2</button>
-<input id="uInput" onchange="changeImage()">
-<button id="changeImage" onclick="changeImage(2)">+2</button>
-<button id="changeImage" onclick="changeImage(10)">+10</button>
-
-
-</body>
 </html>
